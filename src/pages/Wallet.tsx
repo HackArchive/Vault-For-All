@@ -1,4 +1,5 @@
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUpRightFromSquare, faUserPlus,faArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Wallet(){
@@ -99,10 +100,22 @@ export default function Wallet(){
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
                     <p className="text-green-500 font-mono text-xl ">+ 500 ETH</p>
                 </div>
-            </div>
+                <div className="flex flex-wrap max-w-[80%] mt-10 justify-between">
+                <button className="bg-blue-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
+                    <FontAwesomeIcon className="w-5 h-5 fill-current" icon={faUserPlus} />
+                    <span>Add Recipent</span>
+                </button>
 
-            <div>
+                <button className="bg-red-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
+                    <FontAwesomeIcon className="w-5 h-5 fill-current" icon={faArrowUpRightFromSquare} />
+                    <span>Send ETH</span>
+                </button>
+                <button className="bg-pink-600 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
+                    <FontAwesomeIcon className="w-5 h-5 fill-current" icon={faArrowDown} />
+                    <span>Ask ETH</span>
+                </button>
                 
+                </div>
             </div>
 
         </div>
