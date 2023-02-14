@@ -2,7 +2,7 @@ import { useState,useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethereum } from "../App";
 import { walletInfoContext } from '../App';
-import Web3 from 'web3';
+import {web3} from "../utils";
 
 
 export default function AddWallet(){
@@ -11,7 +11,6 @@ export default function AddWallet(){
     const [success,setSuccess] = useState<Boolean>(false);
     const navigate = useNavigate();
 
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
     const {setBalance,setAddress} = useContext(walletInfoContext); 
 
     const getInfo = async ()=>{
