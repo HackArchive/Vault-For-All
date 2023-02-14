@@ -17,23 +17,23 @@ export default function GetStarted(){
                     <div className="flex justify-between text-white mt-40 lg:mt-28">
                 
                     <div>
-                        <a className="text-lg font-black" href="">ShitVault</a>
+                        <a className="text-lg font-black" href="/">ShitVault</a>
                     </div>
                     <div className="lg:flex lg:justify-center lg:visible flex-none hidden">
                         <div>
-                            <a className="text-sm font-semibold px-4" href="">About</a>
+                            <a className="text-sm font-semibold px-4" href="/">About</a>
                         </div>
                         <div>
-                            <a className="text-sm font-semibold px-4" href="">Use cases</a>
+                            <a className="text-sm font-semibold px-4" href="/">Use cases</a>
                         </div>
                         <div>
-                            <a className="text-sm font-semibold px-4" href="">Developers</a>
+                            <a className="text-sm font-semibold px-4" href="/">Developers</a>
                         </div>
                         <div>
-                            <a className="text-sm font-semibold px-4" href="">Company</a>
+                            <a className="text-sm font-semibold px-4" href="/">Company</a>
                         </div>
                         <div>
-                            <a className="text-sm font-semibold px-4" href="">Pricing</a>
+                            <a className="text-sm font-semibold px-4" href="/">Pricing</a>
                         </div>
                     </div>
                     <div>

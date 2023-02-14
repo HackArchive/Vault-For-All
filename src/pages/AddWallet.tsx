@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { ethereum } from "../App";
-
-interface MetaMaskError {
-    code: number;
-    message: String;
-} 
 
 export default function AddWallet(){
 

@@ -1,9 +1,55 @@
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faUserPlus,faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { ethereum } from "../App";
+import BigNumber from "bn.js"
+import Web3 from "web3";
+import * as PushAPI from "@pushprotocol/restapi";
+import {ethers} from 'ethers';
+
+
+const PKey = '0xe5875d5550484e5f20bfa8efe3976432890ba8e43f3b77dd37375f61c0acfc2d';
+export const signer = new ethers.Wallet(PKey);
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 
 export default function Wallet(){
+    
+    
+    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+    const [balance,setBalance] = useState<string>(); 
+    const [address, setAddress] = useState<string>();
+    const [feed,setFeed] = useState<Array<{title:string,message:string,icon:string}>>();
 
+
+    const getInfo = async ()=>{
+        const accounts:string[] = await web3.eth.getAccounts();
+        const balance:string = await web3.eth.getBalance(accounts[0]);
+        setAddress(accounts[0]);
+        setBalance(web3.utils.fromWei(balance));
+        
+    }
+
+    const getFeeds = async ()=>{
+        while(true){
+            const notifications = await PushAPI.user.getFeeds({
+                user: 'eip155:5:0x375C11FD30FdC95e10aAD66bdcE590E1bccc6aFA', // user address in CAIP
+                env: 'staging'
+              });
+              
+              setFeed(notifications);
+              sleep(5000);
+        }
+          
+    }
+
+
+
+    useEffect(()=>{
+        getInfo();
+        getFeeds();
+    })
 
     return(
         
@@ -23,80 +69,9 @@ export default function Wallet(){
             </div>
 
 
-            {/* <div className="flex flex-col bg-white m-auto p-auto overflow-hidden">
-                <h1
-                    className="flex py-5 lg:px-20 md:px-10 px-5 lg:mx-40 md:mx-20 mx-5 font-bold text-4xl text-gray-800"
-                >
-                    Example
-                </h1>
-                <div
-                    className="flex overflow-x-scroll pb-10 hide-scroll-bar"
-                >
-                    <div
-                    className="flex flex-nowrap lg:ml-40 md:ml-20 ml-10 "
-                    >
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    <div className="inline-block px-3">
-                        <div
-                        className="w-64 h-64 max-w-xs overflow-hidden rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow duration-300 ease-in-out"
-                        ></div>
-                    </div>
-                    </div>
-                </div>
-            </div> */}
-
-            <div className="flex flex-col w-[60%] h-[50vh]  mt-10 items-center cursor-pointer">
+            <div className="flex flex-col w-[60%] h-[40vh] items-center cursor-pointer">
                 <p className="text-xl text-gray-400 font-extralight">TOTAL BALANCE</p>
-                <p className="text-grey-700 text-5xl text-white mt-3 font-extralight">4000.8 ETH</p>
+                <p className="text-grey-700 text-5xl text-white mt-3 font-extralight">{balance} ETH</p>
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
                     <p className="text-green-500 font-mono text-xl ">+ 500 ETH</p>
                 </div>
@@ -116,6 +91,33 @@ export default function Wallet(){
                 </button>
                 
                 </div>
+            </div>
+
+
+            <div className="flex flex-col w-[400px] max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md  border-opacity-30 border">
+
+                {
+                    feed?.map((item)=>{
+                        return (
+                            <div key={item.message} className="w-full h-[60px] p-3 flex justify-between items-center text-white">
+                                <div className="w-[80%] h-1/1 flex items-center">
+                                    <div className="w-[15%]">
+                                        <FontAwesomeIcon className="w-5 h-5 fill-current text-green-500" icon={faArrowUpRightFromSquare} />
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <div className="text-xl">{item.message}</div>
+                                        <div className="text-sm text-gray-400">{item.title}</div>
+                                    </div>
+                                </div>
+                                <div className="flex justify-center items-center mr-3">
+                                    <div className="text-green-500">+</div>
+                                    <div className="">$840.20</div>
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+                
             </div>
 
         </div>

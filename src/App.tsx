@@ -1,9 +1,12 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { BrowserRouter, Route, Routes,Link } from 'react-router-dom';
 
 import GetStarted from "./pages/GetStarted";
 import AddWallet from './pages/AddWallet';
 import Wallet from './pages/Wallet';
+
+
+
 
 declare global {
   interface Window {
@@ -13,6 +16,8 @@ declare global {
 
 
 function App() {
+
+
   return (
     <Routes>
         <Route path='/' element={<GetStarted/>}/>
