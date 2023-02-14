@@ -1,55 +1,108 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare, faUserPlus,faArrowDown } from "@fortawesome/free-solid-svg-icons";
-import { ethereum } from "../App";
-import BigNumber from "bn.js"
-import Web3 from "web3";
 import * as PushAPI from "@pushprotocol/restapi";
-import {ethers} from 'ethers';
-
-
-const PKey = '0xe5875d5550484e5f20bfa8efe3976432890ba8e43f3b77dd37375f61c0acfc2d';
-export const signer = new ethers.Wallet(PKey);
-
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
-
+import { createSocketConnection, EVENTS } from '@pushprotocol/socket';
+import { walletInfoContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export default function Wallet(){
     
-    
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
-    const [balance,setBalance] = useState<string>(); 
-    const [address, setAddress] = useState<string>();
-    const [feed,setFeed] = useState<Array<{title:string,message:string,icon:string}>>();
-
-
-    const getInfo = async ()=>{
-        const accounts:string[] = await web3.eth.getAccounts();
-        const balance:string = await web3.eth.getBalance(accounts[0]);
-        setAddress(accounts[0]);
-        setBalance(web3.utils.fromWei(balance));
-        
-    }
+    const navigate = useNavigate();
+    const {balance,address} = useContext(walletInfoContext);
+    const [feed,setFeed] = useState<Array<{title:string,message:string}>>();
+    const [sdkSocket, setSDKSocket] = useState<any>(null);
+    const [isConnected, setIsConnected] = useState(sdkSocket?.connected);
 
     const getFeeds = async ()=>{
-        while(true){
+       
             const notifications = await PushAPI.user.getFeeds({
-                user: 'eip155:5:0x375C11FD30FdC95e10aAD66bdcE590E1bccc6aFA', // user address in CAIP
+                user: `eip155:5:${address}`, // user address in CAIP
                 env: 'staging'
               });
+              console.log(notifications)
+              if(feed!=undefined){
+
+                  if(feed[0].message===notifications[0].message){
+                    return;
+                  }
+              }
+
+            setFeed(notifications);
               
-              setFeed(notifications);
-              sleep(5000);
-        }
           
     }
 
 
+    const addSocketEvents = () => {
+        sdkSocket?.on(EVENTS.CONNECT, () => {
+            console.log("connected")
+          setIsConnected(true);
+        })
+    
+        sdkSocket?.on(EVENTS.DISCONNECT, () => {
+            console.log("disconnected")
+          setIsConnected(false);
+        })
+    
+        sdkSocket?.on(EVENTS.USER_FEEDS, (feedItem:any) => {
+          /**
+           * "feedItem" is the latest notification received
+           */
+          setFeed(prevState => {
+            if (prevState!==undefined){
+                return [
+                    {
+                        title:feedItem.payload.data.app,
+                        message:feedItem.payload.data.amsg
+                    },
+                    ...prevState
+                ]
+            }
+            return [{
+                title:feedItem.payload.data.app,
+                message:feedItem.payload.data.amsg
+            }];
+          })
+          console.log(feedItem.payload.data)
+        })
+      };
+    
+      const removeSocketEvents = () => {
+        sdkSocket?.off(EVENTS.CONNECT);
+        sdkSocket?.off(EVENTS.DISCONNECT);
+      };
 
-    useEffect(()=>{
-        getInfo();
+    
+      useEffect(() => {
+        if (sdkSocket) {
+          addSocketEvents();
+        }
+        return () => {
+          removeSocketEvents();
+        };
+      }, [sdkSocket]);
+    
+      useEffect(() => {
+
+        if(address === ""){
+          navigate("/addWallet")
+        }
+
         getFeeds();
-    })
+        
+        console.log(address,"====");
+        const connectionObject = createSocketConnection({
+          user: `eip155:5:${address}`,
+          env: 'staging',
+        });
+    
+    
+        setSDKSocket(connectionObject);
+
+
+      },[]);
+
 
     return(
         

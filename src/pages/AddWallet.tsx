@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState,useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ethereum } from "../App";
+import { walletInfoContext } from '../App';
+import Web3 from 'web3';
+
 
 export default function AddWallet(){
 
     const [error,setError] = useState<String>("None");
     const [success,setSuccess] = useState<Boolean>(false);
     const navigate = useNavigate();
+
+    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+    const {setBalance,setAddress} = useContext(walletInfoContext); 
+
+    const getInfo = async ()=>{
+        const accounts:string[] = await web3.eth.getAccounts();
+        const balance:string = await web3.eth.getBalance(accounts[0]);
+        setAddress(accounts[0]);
+        setBalance(web3.utils.fromWei(balance));
+    }
 
     const connectionHandler = async () => {
         if (ethereum) {
@@ -24,6 +37,11 @@ export default function AddWallet(){
             setError("You Don't have meta mask");
         }
     }
+
+
+    useEffect(()=>{
+        getInfo();
+    },[])
 
     return(
         <div className="w-[100vw] h-[100vh] bg-[#20223E] flex flex-col justify-center items-center">
