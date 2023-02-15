@@ -5,6 +5,9 @@ import * as PushAPI from "@pushprotocol/restapi";
 import { createSocketConnection, EVENTS } from '@pushprotocol/socket';
 import { walletInfoContext } from "../App";
 import { useNavigate } from "react-router-dom";
+import Notification from "../components/Notification";
+import { NotificationType } from "../utils";
+
 
 export default function Wallet(){
     
@@ -13,6 +16,7 @@ export default function Wallet(){
     const [feed,setFeed] = useState<Array<{title:string,message:string}>>();
     const [sdkSocket, setSDKSocket] = useState<any>(null);
     const [isConnected, setIsConnected] = useState(sdkSocket?.connected);
+    const [notification,setNotification] = useState<NotificationType | null>(null);
 
     const getFeeds = async ()=>{
        
@@ -65,6 +69,12 @@ export default function Wallet(){
             }];
           })
           console.log(feedItem.payload.data)
+
+          setNotification({
+            title:feedItem.payload.data.app,
+            message:feedItem.payload.data.amsg
+          });
+
         })
       };
     
@@ -73,7 +83,7 @@ export default function Wallet(){
         sdkSocket?.off(EVENTS.DISCONNECT);
       };
 
-    
+
       useEffect(() => {
         if (sdkSocket) {
           addSocketEvents();
@@ -107,6 +117,11 @@ export default function Wallet(){
     return(
         
         <div className="w-[100vw] h-[100vh] bg-[#20223E] flex flex-col  items-center overflow-hidden">
+            
+            {
+              notification && <Notification notification={notification} setNotification={setNotification}/>
+            }
+            
             
             <div className=" justify-end w-full flex justify-end ">
                 <div className="m-6 inline-flex relative w-fit">
@@ -151,6 +166,10 @@ export default function Wallet(){
 
                 {
                     feed?.map((item)=>{
+
+                      if (item.message==="sample msg body"){
+                        return;
+                      }
                         return (
                             <div key={item.message} className="w-full h-[60px] p-3 flex justify-between items-center text-white">
                                 <div className="w-[80%] h-1/1 flex items-center">

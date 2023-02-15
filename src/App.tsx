@@ -7,29 +7,9 @@ import Wallet from './pages/Wallet';
 import AddContacts from './pages/AddContact';
 import SendEth from './pages/SendEth';
 import Web3 from 'web3';
+import { ContextData,Contacts } from './utils';
 
 
-
-declare global {
-  interface Window {
-    ethereum:any;
-  }
-}
-
-type ContextData = {
-  balance:string,
-  address:string,
-  contacts: Contacts[],
-  setBalance:React.Dispatch<React.SetStateAction<string>>,
-  setAddress:React.Dispatch<React.SetStateAction<string>>,
-  setContacts:React.Dispatch<React.SetStateAction<Contacts[]>>
-}
-
-type Contacts = {
-  name:string,
-  number:string,
-  address:string
-}
 
 export const walletInfoContext = createContext<ContextData>({} as ContextData);
 
@@ -62,4 +42,3 @@ function App() {
 }
 
 export default App;
-export let ethereum = window.ethereum;

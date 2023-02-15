@@ -4,6 +4,8 @@ import { walletInfoContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import {web3} from "../utils";
+import * as PushAPI from "@pushprotocol/restapi";
+import { ethers } from "ethers";
 
 export default function SendEth () {
 
@@ -13,31 +15,62 @@ export default function SendEth () {
     const [inputAddress,setInputAddress] = useState<string>("");
     const [amount,setAmount] = useState<number>(0.00);
     const navigate = useNavigate();
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner();
+
 
     const pay = async ()=>{
 
-        const nonce = await web3.eth.getTransactionCount(address, 'latest');
+        // const nonce = await web3.eth.getTransactionCount(address, 'latest');
+        // let failed = false;
+        // const transaction = {
+        //     'from':address,
+        //     'to': inputAddress, // faucet address to return eth
+        //     'value': web3.utils.toBN((amount*(10**decimals)).toString()),
+        //     'gas': 21000,
+        //     'nonce': nonce,
+        //     // optional data field to send message or execute smart contract
+        // };
+        
+        // web3.eth.sendTransaction(transaction,(error,hash)=>{
+            
+        //     if(error){
+        //         alert(error.message); 
+        //         failed=true;
+        //     }
+        //     else{
+        //         alert(`Hash:${hash}`);
+        //     }
+        // })
+        
+        // if (!failed){
+            await sendNotification();
+        // }
+        
+    }
 
-        const transaction = {
-            'from':address,
-            'to': inputAddress, // faucet address to return eth
-            'value': web3.utils.toBN((amount*(10**decimals)).toString()),
-            'gas': 21000,
-            'nonce': nonce,
-            // optional data field to send message or execute smart contract
-        };
 
-        web3.eth.sendTransaction(transaction,(error,hash)=>{
-            console.log(error,hash)
-            if(error){
-               alert(error.message); 
-            }
-            else{
-                alert(`Hash:${hash}`);
-            }
-        })
+    const sendNotification = async ()=>{
+        const apiResponse = await PushAPI.payloads.sendNotification({
+            signer,
+            type: 3, // target
+            identityType: 2, // direct payload
+            notification: {
+                title: address,
+                body: `Sent you ${amount} ETH`
+            },
+                payload: {
+                title: address,
+                body: `Sent you ${amount} ETH`,
+                cta: '',
+                img: ''
+            },
+            recipients: `eip155:5:${inputAddress}`, // recipient address
+            channel: `eip155:5:${address}`, // your channel address
+            env: 'staging'
+          });
 
-
+        console.log(apiResponse);
     }
 
 
