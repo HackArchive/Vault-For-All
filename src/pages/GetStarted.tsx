@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function GetStarted(){
 
     return(
-    <>   
+    <section className='overflow-hidden '>   
         <header className="myheader transform -skew-y-12 bg-gradient-to-r from-pink-500 via-blue-400  to-yellow-300">
             
             <div className=" lg:px-28 lg:py-4 px-2 py-2 bg-gradient-to-r from-purple-500 via-green-600 to-blue-300">
@@ -76,7 +76,7 @@ export default function GetStarted(){
 
                 </div>
             
-            <div className="lg:grid lg:grid-cols-4 mt-20 lg:2 grid grid-cols-2 gap-x-32 gap-y-3 lg:px-20 lg:py-16">
+            <div className="lg:flex-row flex-col flex mt-20  gap-x-32 gap-y-10 lg:px-20 lg:py-16 mx-auto">
             
                 <div className="m-auto">
                     <img width="100" src="https://imgs.search.brave.com/10YhpqGwjLje2GYuLFJzcfDdHXuH2VjJCQOhuDYQu74/rs:fit:512:512:1/g:ce/aHR0cHM6Ly9jZG4u/aWNvbnNjb3V0LmNv/bS9pY29uL2ZyZWUv/cG5nLTUxMi9tZXRh/bWFzay0yNzI4NDA2/LTIyNjE4MTcucG5n" alt=""/>
@@ -88,14 +88,14 @@ export default function GetStarted(){
                 <div className="m-auto">
                     <img width="100" src="https://imgs.search.brave.com/qLfb_SnxltDI1t3C4kN4eJuYe8Q-rcj5VG4yHxWdzZU/rs:fit:1024:1024:1/g:ce/aHR0cHM6Ly93d3cu/cGluY2xpcGFydC5j/b20vcGljZGlyL2Jp/Zy80MjMtNDIzNzc3/N19ldGgtaWNvbi1j/cnlwdG9jdXJyZW5j/eS1mbGF0LXRyYW5z/cGFyZW50LWJhY2tn/cm91bmQtZXRoZXJl/dW0tY2xpcGFydC5w/bmc" alt=""/>
                 </div>
-                <div className="m-auto">
+                {/* <div className="m-auto">
                     <img width="100" src="https://imgs.search.brave.com/se6MB4E4iENSUStf-hcajnWT3oSEEEX8i-1hW2rR750/rs:fit:920:920:1/g:ce/aHR0cHM6Ly9jbGlw/YXJ0Y3JhZnQuY29t/L2ltYWdlcy9hbWF6/b24tbG9nby10cmFu/c3BhcmVudC1pY29u/LTMucG5n" alt=""/>
-                </div>
+                </div> */}
         
             </div>
         </div>
         </main>
-    </>
+    </section>
     );
 
 } 
