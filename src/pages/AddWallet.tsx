@@ -1,6 +1,6 @@
 import { useState,useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ethereum } from "../App";
+import { ethereum } from "../utils/index";
 import { walletInfoContext } from '../App';
 import {web3} from "../utils";
 

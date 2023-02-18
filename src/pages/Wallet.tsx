@@ -7,6 +7,7 @@ import { walletInfoContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Notification from "../components/Notification";
 import { NotificationType } from "../utils";
+import mint from "../utils/mint";
 
 
 export default function Wallet(){
@@ -121,7 +122,7 @@ export default function Wallet(){
             {
               notification && <Notification notification={notification} setNotification={setNotification}/>
             }
-            
+            <button onClick={()=>{mint("test name", "test desc", "9ir2eV4oU8me8UV8KNELeNwocTbSCu3Mbtb942QXxXMC")}}>test</button>
             
             <div className=" justify-end w-full flex justify-end ">
                 <div className="m-6 inline-flex relative w-fit">
