@@ -42,7 +42,7 @@ export default function AddContacts () {
                                 <input 
                                 value={name}
                                 onChange={(event)=>setName(event.target.value)}
-                                type="text" placeholder="Swapnil" className="leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-800 rounded" />
+                                type="text" placeholder="Name" className="leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-800 rounded" />
                             </div>
                             <div className="w-full md:w-1/2 flex flex-col md:ml-6 md:mt-0 mt-4">
                                 <label className="font-semibold leading-none text-gray-300">Phone</label>
