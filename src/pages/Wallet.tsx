@@ -117,7 +117,7 @@ export default function Wallet(){
 
     return(
         
-        <div className="w-[100vw] h-[100vh] bg-[#1c2e4a] flex flex-col  items-center overflow-hidden">
+        <div className="w-screen h-screen bg-[#1c2e4a] flex flex-col  items-center overflow-hidden">
             
             {
               notification && <Notification notification={notification} setNotification={setNotification}/>
@@ -144,7 +144,7 @@ export default function Wallet(){
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
                     <p className="text-green-500 font-mono text-xl ">+ 500 ETH</p>
                 </div>
-                <div className="flex flex-wrap max-w-[80%] mt-10 justify-between">
+                <div className="flex flex-wrap flex-col lg:flex-row gap-y-5 max-w-[80%] mt-10 justify-between ">
                 <button onClick={()=>navigate("/addContacts")} className="bg-blue-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
                     <FontAwesomeIcon className="w-5 h-5 fill-current" icon={faUserPlus} />
                     <span>Add Recipent</span>
@@ -163,7 +163,7 @@ export default function Wallet(){
             </div>
 
 
-            <div className="flex flex-col w-[400px] max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md  border-opacity-30 border">
+            <div className="flex flex-col max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md mt-24 px-4 border-opacity-30 border">
 
                 {
                     feed?.map((item)=>{
