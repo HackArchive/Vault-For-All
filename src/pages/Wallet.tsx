@@ -18,7 +18,7 @@ export default function Wallet(){
     const [sdkSocket, setSDKSocket] = useState<any>(null);
     const [isConnected, setIsConnected] = useState(sdkSocket?.connected);
     const [notification,setNotification] = useState<NotificationType | null>(null);
-
+    const [feedData, setFeedData] = useState<any>(null);
     const getFeeds = async ()=>{
        
             const notifications = await PushAPI.user.getFeeds({
@@ -70,6 +70,7 @@ export default function Wallet(){
             }];
           })
           console.log(feedItem.payload.data)
+          setFeedData(feedItem.payload.data)
 
           setNotification({
             title:feedItem.payload.data.app,
@@ -142,7 +143,7 @@ export default function Wallet(){
                 <p className="text-xl text-gray-400 font-extralight">TOTAL BALANCE</p>
                 <p className="text-grey-700 text-5xl text-white mt-3 font-extralight">{balance} ETH</p>
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
-                    <p className="text-green-500 font-mono text-xl ">+ 500 ETH</p>
+                    <p className="text-green-500 font-mono text-xl ">{feedData}</p>
                 </div>
                 <div className="flex flex-wrap flex-col lg:flex-row gap-y-5 max-w-[80%] mt-10 justify-between ">
                 <button onClick={()=>navigate("/addContacts")} className="bg-blue-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
