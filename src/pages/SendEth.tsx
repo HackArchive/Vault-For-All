@@ -47,8 +47,23 @@ export default function SendEth() {
         //   `Hey New reward unlocked https://polygon.nftscan.com/${resp.transaction_hash}`
         // );
 
+        // toast(
+        //   `Hey New reward unlocked <a href="https://polygon.nftscan.com/${resp.transaction_hash}">here</a>`
+        // );
+
         toast(
-          `Hey New reward unlocked https://polygon.nftscan.com/${resp.transaction_hash}`
+          <>
+            Hey New reward unlocked, check{"   "}
+            <a
+              style={{ color: "orange" }}
+              href={resp.transaction_external_url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {" "}
+              here
+            </a>
+          </>
         );
       }
     });
