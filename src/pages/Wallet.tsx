@@ -18,7 +18,7 @@ export default function Wallet(){
     const [sdkSocket, setSDKSocket] = useState<any>(null);
     const [isConnected, setIsConnected] = useState(sdkSocket?.connected);
     const [notification,setNotification] = useState<NotificationType | null>(null);
-
+    const [feedData, setFeedData] = useState<any>(null);
     const getFeeds = async ()=>{
        
             const notifications = await PushAPI.user.getFeeds({
@@ -70,6 +70,7 @@ export default function Wallet(){
             }];
           })
           console.log(feedItem.payload.data)
+          setFeedData(feedItem.payload.data)
 
           setNotification({
             title:feedItem.payload.data.app,
@@ -117,14 +118,14 @@ export default function Wallet(){
 
     return(
         
-        <div className="w-[100vw] h-[100vh] bg-[#20223E] flex flex-col  items-center overflow-hidden">
+        <div className="w-screen h-screen bg-[#1c2e4a] flex flex-col  items-center overflow-hidden">
             
             {
               notification && <Notification notification={notification} setNotification={setNotification}/>
             }
             <button onClick={()=>{mint("test name", "test desc", "0xCf673b87aFBed6091617331cC895376209d3b923")}}>test</button>
             
-            <div className=" justify-end w-full flex justify-end ">
+            <div className=" justify-end w-full flex">
                 <div className="m-6 inline-flex relative w-fit">
                 <div className="absolute inline-block top-0 right-0 bottom-auto left-auto translate-x-2/4 -translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 p-2.5 text-xs bg-pink-700 rounded-full z-10"></div>
                 <div className="px-3 py-2 bg-indigo-400 flex items-center justify-center text-center rounded-lg shadow-lg">
@@ -142,9 +143,9 @@ export default function Wallet(){
                 <p className="text-xl text-gray-400 font-extralight">TOTAL BALANCE</p>
                 <p className="text-grey-700 text-5xl text-white mt-3 font-extralight">{balance} ETH</p>
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
-                    <p className="text-green-500 font-mono text-xl ">+ 500 ETH</p>
+                    <p className="text-green-500 font-mono text-xl ">{feedData}</p>
                 </div>
-                <div className="flex flex-wrap max-w-[80%] mt-10 justify-between">
+                <div className="flex flex-wrap flex-col lg:flex-row gap-y-5 max-w-[80%] mt-10 justify-between ">
                 <button onClick={()=>navigate("/addContacts")} className="bg-blue-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">
                     <FontAwesomeIcon className="w-5 h-5 fill-current" icon={faUserPlus} />
                     <span>Add Recipent</span>
@@ -163,7 +164,7 @@ export default function Wallet(){
             </div>
 
 
-            <div className="flex flex-col w-[400px] max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md  border-opacity-30 border">
+            <div className="flex flex-col max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md mt-24 px-4 border-opacity-30 border">
 
                 {
                     feed?.map((item)=>{
