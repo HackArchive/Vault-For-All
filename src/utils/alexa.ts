@@ -4,7 +4,7 @@ export const sendNotificationToAlexa = async (
   title = ""
 ) => {
   try {
-    const response = await fetch("api.notifymyecho.com/v1/NotifyMe", {
+    const response = await fetch("https://api.notifymyecho.com/v1/NotifyMe", {
       method: "POST",
       body: JSON.stringify({
         notification,
