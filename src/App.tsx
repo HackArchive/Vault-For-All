@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
@@ -25,6 +25,10 @@ function App() {
     setBalance,
     setContacts,
   };
+
+  useEffect(()=>{
+    document.title = "VaultForAll"
+  },[])
 
   return (
     <walletInfoContext.Provider value={contextData}>

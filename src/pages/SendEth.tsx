@@ -56,7 +56,7 @@ export default function SendEth() {
             Hey New reward unlocked, check{"   "}
             <a
               style={{ color: "orange" }}
-              href={resp.transaction_external_url}
+              href={`https://polygon.nftscan.com/${resp.transaction_hash}`}
               target="_blank"
               rel="noreferrer"
             >

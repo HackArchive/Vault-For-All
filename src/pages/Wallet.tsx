@@ -166,7 +166,7 @@ export default function Wallet(){
             </div>
 
 
-            <div className="flex flex-col max-h-[300px] overflow-y-scroll p-3 border-red-400 rounded-md mt-24 px-4 border-opacity-30 border">
+            <div className="flex flex-col max-h-[300px] w-[80%] overflow-y-scroll p-3 border-red-400 rounded-md mt-10 px-4 border-opacity-30 border">
 
                 {
                     feed?.map((item)=>{
@@ -175,7 +175,7 @@ export default function Wallet(){
                         return;
                       }
                         return (
-                            <div key={item.message} className="w-full h-[60px] p-3 flex justify-between items-center text-white">
+                            <div key={item.message} className="w-full h-[60px] p-3 mt-3 flex justify-between items-center text-white">
                                 <div className="w-[80%] h-1/1 flex items-center">
                                     <div className="w-[15%]">
                                         <FontAwesomeIcon className="w-5 h-5 fill-current text-green-500" icon={faArrowUpRightFromSquare} />
