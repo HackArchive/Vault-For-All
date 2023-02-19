@@ -50,8 +50,9 @@ We're very pleased with the end result.
 We learned that it can be frustrating at times to try to learn an entirely new thing and software as a team. But it was also, really, really fun, the most important things are to remember we're all in this together, and to never give up. Some bugs take a lot of time to fix but we just gotta try and try until we succeed. we gotta put in our 100%, at the end of the day it doesn't matter if we lose or win, what matter is did we give our best.
 
  
-
-
+# Other Links 👎
+For testing : https://vault-for-all.vercel.app/
+For video : https://youtu.be/ssnL7VBpzQ0
 
 
 
