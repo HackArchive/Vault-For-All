@@ -3,42 +3,64 @@ import * as env from "../.process.env";
 
 export default function mint(name: string, description: string, reciver: string) {
   console.log("minting nft");
-  const config = {
+
+  const image_url = "https://bafybeidqsgv6i7xkfueinkr4xfxfgjucob3slm2bzbyn75q7q4ibhbxxbi.ipfs.w3s.link/vault-nft.png";
+
+  const options = {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      accept: 'application/json',
+      'content-type': 'application/json',
+      Authorization: env.NFTPORT_API_KEY
     },
-  };
-
-  const image_url = "https://www.arweave.net/I5Hh_7aHWH21giaelic-Tah1p3kwA71fFur4yw5Bcls?ext=png";
-
-  const metadata = {
-    name: name,
-    image: image_url,
-    description: description,
-  }
-
-  const data = {
-    jsonrpc: "2.0",
-    id: 1,
-    method: "cm_mintNFT",
-    params: ["default-solana", "sol:" + reciver, metadata],
-  };
-
-  axios
-    .post(
-      env.QUICKNODE_URL,
-      data,
-      config
-    )
-    .then(function(response) {
-      // handle success
-      console.log(response.data);
-      return { status: response.status, data: response.data };
+    body: JSON.stringify({
+      chain: 'polygon',
+      name: name,
+      description: description,
+      file_url: image_url,
+      mint_to_address: reciver
     })
-    .catch((err) => {
-      // handle error
-      console.log(err);
-      return { error: err };
-    });
-}
+  };
 
+  fetch('https://api.nftport.xyz/v0/mints/easy/urls', options)
+    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+      return response;
+    })
+    .catch(err => {
+      console.error(err);
+      return err;
+    });
+
+
+  // const metadata = {
+  //   name: name,
+  //   image: image_url,
+  //   description: description,
+  // }
+
+  // const data = {
+  //   jsonrpc: "2.0",
+  //   id: 2,
+  //   method: "cm_mintNFT",
+  //   params: ["default-polygon", "polygon:" + reciver, metadata],
+  // };
+
+  // axios
+  //   .post(
+  //     env.QUICKNODE_URL,
+  //     data,
+  //     config
+  //   )
+  //   .then(function(response) {
+  //     // handle success
+  //     console.log(response.data);
+  //     return { status: response.status, data: response.data };
+  //   })
+  //   .catch((err) => {
+  //     // handle error
+  //     console.log(err);
+  //     return { error: err };
+  //   });
+}

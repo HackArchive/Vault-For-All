@@ -122,7 +122,7 @@ export default function Wallet(){
             {
               notification && <Notification notification={notification} setNotification={setNotification}/>
             }
-            <button onClick={()=>{mint("test name", "test desc", "9ir2eV4oU8me8UV8KNELeNwocTbSCu3Mbtb942QXxXMC")}}>test</button>
+            <button onClick={()=>{mint("test name", "test desc", "0xCf673b87aFBed6091617331cC895376209d3b923")}}>test</button>
             
             <div className=" justify-end w-full flex justify-end ">
                 <div className="m-6 inline-flex relative w-fit">
