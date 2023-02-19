@@ -24,3 +24,5 @@ yarn-error.log*
 
 # ENV
 .env
+.process.env.js
+src/.process.env.js
