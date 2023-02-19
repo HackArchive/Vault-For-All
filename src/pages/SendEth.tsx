@@ -6,6 +6,8 @@ import { faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { web3 } from "../utils";
 import * as PushAPI from "@pushprotocol/restapi";
 import { ethers } from "ethers";
+import mint from "../utils/mint";
+
 
 export default function SendEth() {
 
@@ -32,14 +34,17 @@ export default function SendEth() {
       // optional data field to send message or execute smart contract
     };
 
-    web3.eth.sendTransaction(transaction, (error, hash) => {
+    web3.eth.sendTransaction(transaction, async (error, hash) => {
 
       if (error) {
         alert(error.message);
         failed = true;
       }
       else {
-        alert(`Hash:${hash}`);
+        // alert(`Hash:${hash}`);
+        let resp:any = await mint("1st Transaction", "this is your 1st transaction", address)
+        console.log(resp);
+        alert(`Hey New reward unlocked https://polygon.nftscan.com/${resp.transaction_hash}`)
       }
     })
 

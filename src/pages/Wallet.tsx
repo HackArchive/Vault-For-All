@@ -7,7 +7,6 @@ import { walletInfoContext } from "../App";
 import { useNavigate } from "react-router-dom";
 import Notification from "../components/Notification";
 import { NotificationType } from "../utils";
-import mint from "../utils/mint";
 import {sendNotificationToAlexa}  from "../utils/alexa";   
 import {REACT_APP_ALEXA_ACCESS_CODE} from "../process.env.js";
 
@@ -127,9 +126,7 @@ export default function Wallet(){
             
             {
               notification && <Notification notification={notification} setNotification={setNotification}/>
-            }
-            <button onClick={()=>{mint("test name", "test desc", "0xCf673b87aFBed6091617331cC895376209d3b923")}}>test</button>
-            
+            }            
             <div className=" justify-end w-full flex">
                 <div className="m-6 inline-flex relative w-fit">
                 <div className="absolute inline-block top-0 right-0 bottom-auto left-auto translate-x-2/4 -translate-y-1/2 rotate-0 skew-x-0 skew-y-0 scale-x-100 scale-y-100 p-2.5 text-xs bg-pink-700 rounded-full z-10"></div>

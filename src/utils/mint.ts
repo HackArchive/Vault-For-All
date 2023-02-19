@@ -22,7 +22,7 @@ export default function mint(name: string, description: string, reciver: string)
     })
   };
 
-  fetch('https://api.nftport.xyz/v0/mints/easy/urls', options)
+  return fetch('https://api.nftport.xyz/v0/mints/easy/urls', options)
     .then(response => response.json())
     .then(response => {
       console.log(response);
