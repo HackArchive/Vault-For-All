@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { NotificationType } from "../../utils";
-
+ 
 export default function Notification(props: {notification:NotificationType | null,setNotification:React.Dispatch<React.SetStateAction<NotificationType | null>>}){
 
     const deleteNotification = ()=>{
