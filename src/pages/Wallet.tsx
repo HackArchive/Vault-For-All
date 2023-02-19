@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Notification from "../components/Notification";
 import { NotificationType } from "../utils";
 import mint from "../utils/mint";
-
+import {sendNotificationToAlexa}  from "../utils/alexa";   
+import {REACT_APP_ALEXA_ACCESS_CODE} from "../process.env.js";
 
 export default function Wallet(){
     
@@ -56,6 +57,8 @@ export default function Wallet(){
            */
           setFeed(prevState => {
             if (prevState!==undefined){
+                
+                sendNotificationToAlexa(feedItem.payload.data.amsg,REACT_APP_ALEXA_ACCESS_CODE);
                 return [
                     {
                         title:feedItem.payload.data.app,
@@ -68,9 +71,11 @@ export default function Wallet(){
                 title:feedItem.payload.data.app,
                 message:feedItem.payload.data.amsg
             }];
-          })
-          console.log(feedItem.payload.data)
-          setFeedData(feedItem.payload.data)
+      })
+          
+          console.log([{title:feedItem.payload.data.app,message:feedItem.payload.data.amsg}])
+          
+          setFeedData([{title:feedItem.payload.data.app,message:feedItem.payload.data.amsg}])
 
           setNotification({
             title:feedItem.payload.data.app,
@@ -115,7 +120,7 @@ export default function Wallet(){
 
       },[]);
 
-
+ 
     return(
         
         <div className="w-screen h-screen bg-[#1c2e4a] flex flex-col  items-center overflow-hidden">
@@ -143,7 +148,7 @@ export default function Wallet(){
                 <p className="text-xl text-gray-400 font-extralight">TOTAL BALANCE</p>
                 <p className="text-grey-700 text-5xl text-white mt-3 font-extralight">{balance} ETH</p>
                 <div className="w-[150px] h-[50px] bg-green-600 bg-opacity-20  flex justify-center items-center rounded-md mt-5">
-                    <p className="text-green-500 font-mono text-xl ">{feedData}</p>
+                    <p className="text-green-500 font-mono text-xl ">+500</p>
                 </div>
                 <div className="flex flex-wrap flex-col lg:flex-row gap-y-5 max-w-[80%] mt-10 justify-between ">
                 <button onClick={()=>navigate("/addContacts")} className="bg-blue-500 mx-5 px-4 py-2 font-semibold text-white inline-flex items-center space-x-2 rounded">

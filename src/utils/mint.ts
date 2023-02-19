@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as env from "../.process.env";
+import * as env from "../process.env";
 
 export default function mint(name: string, description: string, reciver: string) {
   console.log("minting nft");
