@@ -51,8 +51,8 @@ We learned that it can be frustrating at times to try to learn an entirely new t
 
  
 # Other Links 👎
-For testing : https://vault-for-all.vercel.app/
-For video : https://youtu.be/ssnL7VBpzQ0
+- For testing : https://vault-for-all.vercel.app/ <br>
+- For video : https://youtu.be/ssnL7VBpzQ0
 
 
 
